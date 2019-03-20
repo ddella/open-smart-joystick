@@ -13,9 +13,9 @@ I installed the optiLoader. Follow the instruction at https://github.com/WestfW/
 
 ## Frame sent from remote, only when there's a change
 
-+------------+------------+------------+------------+------------+------------+------------+
-| Preamble   |    Key     |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
-+------------+------------+------------+------------+------------+------------+------------+
++------------+------------+------------+------------+------------+------------+------------+<br>
+| Preamble   |    Key     |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |<br>
++------------+------------+------------+------------+------------+------------+------------+<br>
 
 Preamble = 0xAA
 
