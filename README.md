@@ -41,7 +41,7 @@ Values for X or Y axis are encoded on 16-Bits to keep the full resolution of the
 
 As an example, if the axis value is 0x03ff, then
 
-[X-Y]-Axis Low  byte = 0xFF
-[X-Y]-Axis High byte = 0x03
+[X-Y]-Axis Low  byte = 0xFF<br>
+[X-Y]-Axis High byte = 0x03<br>
 
 The last byte is a FCS on all the bytes, including preamble.
