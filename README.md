@@ -40,6 +40,7 @@ Values for X or Y axis are encoded on 16-Bits to keep the full resolution of the
 * Y-Axis L: The LSB of the Y-Axis Value
 
 As an example, if the axis value is 0x03ff, then
+
 [X-Y]-Axis Low  byte = 0xFF
 [X-Y]-Axis High byte = 0x03
 
