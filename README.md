@@ -27,7 +27,8 @@ To install the optiLoader follow the instruction [here](https://www.electronoobs
 
 You should receive the following message if the bootloader has been successfully burned.
 
-```OptiLoader Bootstrap programmer.
+```
+OptiLoader Bootstrap programmer.
 2011 by Bill Westfield (WestfW)
 
 Target power on! ...
@@ -60,12 +61,25 @@ Target power OFF!
 Type 'G' or hit RESET for next chip
 ```
 
-## Frame sent from remote, only when there's a change
+## Frames sent from remote
 
 The remote sends only two types of packets.
 1. Packet with preamble of 0xAA are sent only when there's a change on the remote.
 Either a button pressed/released or a movement with the joystick.
 2. Packet with preamble of 0xE0 are Keepalive.
+
+##### Status packet
+
+The status packet is sent only when there's a change on the remote. It's seven (7) bytes long.
+
+1. Preamble is 0xAA
+2. Status byte for the buttons. Each button has a bit associate to it. See below the representation
+of each bits.
+3. MSB of the x-axis
+4. LSB of the x-axis
+5. MSB of the y-axis
+6. LSB of the y-axis
+7. Simple checksum of the whole packet, including the preambule
 
 ```
 +------------+------------+------------+------------+------------+------------+------------+
@@ -76,11 +90,12 @@ Either a button pressed/released or a movement with the joystick.
 Preamble = 0xAA
 
 The following byte represents any of the button. Bits [5-7] are always 0.
-
+```
 +------+------+------+------+------+------+------+------+
 |  0   |  0   |  0   |  K5  |  K4  |  K3  |  K2  |  K1  |
 +------+------+------+------+------+------+------+------+
    b7     b6     b5     b4     b3     b2     b1     b0
+```
 
 K1 pressed = 0b00000001 (0x01)
 K2 pressed = 0b00000010 (0x02)
