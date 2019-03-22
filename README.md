@@ -1,7 +1,7 @@
 # open-smart-joystick
 
 Firmware for OPEN-SMART wireless joystick remote. This is a modified firmware for the
-OPEN-SMART wireless joystick. See the picture [open-smart.png] (https://github.com/ddella/open-smart-joystick/blob/master/open-smart.png).
+OPEN-SMART wireless joystick. See the picture [open-smart.png](https://github.com/ddella/open-smart-joystick/blob/master/open-smart.png).
 
 Following is what I added from the original version.
 
