@@ -1,20 +1,18 @@
 /*
  * Program:  Receiver.ino
  *  
- * Description:  Open-Smart wireless joystick. Frequency of RF receiver is 433MHz.
- *   Simple example of how to use VirtualWire to receive messages from the wireless joystick.
- *   
- *   This code assumes that you are using my modified firmware for the OPEN-SMART wireless
- *   remote joystick.
+ * Description:  This program will receive the packets from Open-Smart wireless joystick.
+ *   Frequency of RF receiver is 433MHz. This code assumes that you are using my modified
+ *   firmware for the OPEN-SMART wireless remote joystick.
  *   
  * There's only two different types of frame sent by the remote.
  * 
  * 1. Wireless Joystick status frame. It contains the status of all the buttons,
- *    x-axis and y-axis value.
+ *    x-axis and y-axis values.
  *
- * 2. Keepalive frame. Sent to the remote to make sure it stills sees the joystick.
+ * 2. Keepalive frame. Sent to the remote so it can detect if it's out of range.
  * 
- * Frame from remote wireless joystick. Frames are only sent when there's a change.
+ * Status packets from remote wireless joystick. Only sent when there's a change.
  * +------------+------------+------------+------------+------------+------------+------------+
  * | Preamble   |   Button   | MSB x-axis | LSB x-axis | MSB y-axis | LSB y-axis |    FCS     |
  * +------------+------------+------------+------------+------------+------------+------------+ 
@@ -142,7 +140,7 @@
 #define JOYSTICK_BUTTON_KZ_PRESSED 0b00010000 // (0x10)
 #define JOYSTICK_NO_BUTTON_PRESSED 0b00000000 // (0x00) no button pressed
 
-#define WORD(high,low) (((uint16_t)high << 8) | low)  //Returns a uint16 from two uint8
+#define WORD(MSB,LSB) (((uint16_t)MSB << 8) | LSB)  //Returns a uint16 from two uint8
 
 /* Global variables for schedulers */
 #ifdef KEEPALIVE
@@ -168,7 +166,7 @@ void setup() {
   };
 
   Serial.println(F("OPEN-SMART Wireless Joystick Remote"));
-  Serial.println(F("WirelessJoystickRemote.ino"));
+  Serial.println(F("Receiver.ino"));
   Serial.println(F("by Daniel Della Noce"));
   Serial.print(F("Please connect Rx pin of module on DIO #: ")); Serial.println (RX_DIO_PIN);
   Serial.println();
@@ -269,7 +267,15 @@ void loop() {
    */
 #ifdef KEEPALIVE
   if (millis() - previousMillis_500ms >= INTERVAL_500ms) {
-    previousMillis_500ms = millis();   
+    previousMillis_500ms = millis();
+/*
+ * This code is "overflow" safe. Even if millis() overflow after 49 days, the test
+ * will be valid.
+ * 
+ * !!! The following will NOT work !!!
+ * if (millis()  > LastKeepalive + KEEPALIVE_INTERVAL)
+ * 
+ */
     if (millis() - LastKeepalive > KEEPALIVE_INTERVAL) {
       //Keepalive not received!!!
       Serial.print(F("Keepalive not received. Last keepalive received: "));
