@@ -97,9 +97,11 @@ JoystickCtrl::JoystickCtrl() {
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
     pinMode(_Key_Pin[keys_idx], INPUT_PULLUP);
   }
-
-  _X_Axis_Zero = readX_Axis();  // get the initial values for the X & Y axis. Should read ~512
-  _Y_Axis_Zero = readY_Axis();  // Joystick MUST be in neutral position when reading.
+/*
+ * Get the initial values of all the sensors.
+ * Joystick MUST be in neutral position when reading.
+ */
+  init ();
 
 }//JoystickCtrl
 
