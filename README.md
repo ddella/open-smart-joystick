@@ -68,7 +68,7 @@ The remote sends only two types of packets.
 Either a button pressed/released or a movement with the joystick.
 2. Packet with preamble of 0xE0 are Keepalive.
 
-##### Status packet
+#### Status packet
 
 The status packet is sent only when there's a change on the remote. It's seven (7) bytes long.
 
@@ -83,13 +83,16 @@ of each bits.
 
 ```
 +------------+------------+------------+------------+------------+------------+------------+
-| Preamble   |   Button   |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
+| Preamble   |   Button   | MSB x-axis | LSB x-axis | MSB y-axis | LSB y-axis |    FCS     |
 +------------+------------+------------+------------+------------+------------+------------+
 ```
 
 Preamble of a status packet = 0xAA
 
 The following byte represents the "button". Each button on the remote has a bit associated to it.
+* A bit sets at 1 means "button pressed".
+* A bit sets at 0 means "button not pressed".
+
 Bits [5-7] are always 0.
 
 ```
@@ -105,21 +108,21 @@ K3 pressed = 0b00000100 (0x04)
 K4 pressed = 0b00001000 (0x08)
 KZ pressed = 0b00010000 (0x10) (Joystick button)
 
-Values for X or Y axis are encoded on 16-Bits to keep the full resolution of the joystick.
+Values for X and Y axis are encoded on 16-Bits to keep the full resolution of the joystick.
 
-* X-Axis H: The MSB of the X-Axis Value
-* X-Axis L: The LSB of the X-Axis Value
-* Y-Axis H: The MSB of the Y-Axis Value
-* Y-Axis L: The LSB of the Y-Axis Value
+* MSB x-axis: The MSB of the X-Axis Value
+* LSB x-axis: The LSB of the X-Axis Value
+* MSB y-axis: The MSB of the Y-Axis Value
+* LSB y-axis: The LSB of the Y-Axis Value
 
-As an example, if the axis value is 0x03ff, then
+As an example, if an axis value is 0x1234, then
 
-* MSB of axis byte  = 0xFF
-* LSB of axis byte  = 0x03
+* MSB of axis byte  = 0x12
+* LSB of axis byte  = 0x34
 
-The last byte is an FCS on all the bytes, including preamble.
+The last byte is FCS. It's a simple checksum on all the bytes, including preamble.
 
-##### Keepalive packet
+#### Keepalive packet
 
 The keepalive packets are sent at regular interval so the receiver can detect when its out of range.
 This feature can be disable when compiling the firmware. See the `#define` in the code.
@@ -133,5 +136,19 @@ Keepalive sent every 3 seconds
 ```
 
 Preamble = 0xE0
-The last byte is an FCS on all the bytes, including preamble.
+
+The last byte is FCS. It's a simple checksum on all the bytes, including preamble.
+
+## Authors
+
+* **Daniel Della Noce** - *Initial work* - [ddella](https://github.com/ddella)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Acknowledgments
+
+* Thanks to Bill Westfield for his optiLoader
+* Inspiration from intial code of OPEN-SMART
 
