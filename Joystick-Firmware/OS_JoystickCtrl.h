@@ -20,7 +20,7 @@ enum keys_idx {k1, k2, k3, k4, kz};
 //number ^= (-x ^ number) & (1 << n)
 #define _CHANGE_BIT(_byte, _x, _bit) (-_x ^ _byte) & (1 << _bit)
 
-#define MSB(b) (b >> 8)  //Returns the MSB of an uint16_t
+#define MSB(b) (b >> 8)   //Returns the MSB of an uint16_t
 #define LSB(b) (b & 0xff) //Returns the LSB of an uint16_t
 
 #define X_SMOOTHING 30 //Minimum movement of X axis before we consider a change
