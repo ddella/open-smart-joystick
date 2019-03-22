@@ -83,13 +83,14 @@ of each bits.
 
 ```
 +------------+------------+------------+------------+------------+------------+------------+
-| Preamble   |    Key     |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
+| Preamble   |   Button   |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
 +------------+------------+------------+------------+------------+------------+------------+
 ```
 
-Preamble = 0xAA
+Preamble of a status packet = 0xAA
 
 The following byte represents any of the button. Bits [5-7] are always 0.
+
 ```
 +------+------+------+------+------+------+------+------+
 |  0   |  0   |  0   |  K5  |  K4  |  K3  |  K2  |  K1  |
@@ -112,7 +113,7 @@ Values for X or Y axis are encoded on 16-Bits to keep the full resolution of the
 
 As an example, if the axis value is 0x03ff, then
 
-[X-Y]-Axis Low  byte = 0xFF<br>
-[X-Y]-Axis High byte = 0x03<br>
+MSB of axis byte  = 0xFF
+LSB of axis byte  = 0x03
 
-The last byte is a FCS on all the bytes, including preamble.
+The last byte is an FCS on all the bytes, including preamble.
