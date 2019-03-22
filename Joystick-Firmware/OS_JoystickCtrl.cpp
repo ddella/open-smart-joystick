@@ -1,6 +1,6 @@
 /*
- * OS_JoystickCtrl - Library for sending codes from the OPEN-SMART Wireless Koystick Remote
- * to a 433 Mhz wireless receiver.
+ * OS_JoystickCtrl - Library for reading buttons and joystick from the OPEN-SMART
+ * Wireless Koystick Remote.
  * 
  * I started with the original "WirelessTransmitterFirmware" apparently made by Fred Chu.
  * 
