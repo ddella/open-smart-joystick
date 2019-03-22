@@ -17,16 +17,14 @@
 #define MAX_KEY 5
 enum keys_idx {k1, k2, k3, k4, kz};
 
-//#define _SET_BIT(_bit)    (1 << _bit) //value |= _SET_BIT(_bit)
-//#define _CLEAR_BIT(_bit) ~(1 << _bit) //value &= _CLEAR_BIT(_bit)
-//Bit _bit will be set if _x is 1, and cleared if _x is 0.
-#define _CHANGE_BIT(_byte, _x, _bit) (-_x ^ _byte) & (1 << _bit) //number ^= (-x ^ number) & (1UL << n)
+//number ^= (-x ^ number) & (1 << n)
+#define _CHANGE_BIT(_byte, _x, _bit) (-_x ^ _byte) & (1 << _bit)
 
-#define HIGHBYTE(b) (b >> 8)  //Returns the MSB from an uint16_t
-#define LOWBYTE(b) (b & 0xff) //Returns the LSB from an uint16_t
+#define MSB(b) (b >> 8)  //Returns the MSB of an uint16_t
+#define LSB(b) (b & 0xff) //Returns the LSB of an uint16_t
 
-#define X_SMOOTHING 30 //Minimum movement of X axis
-#define Y_SMOOTHING 30 //Minimum movement of Y axis
+#define X_SMOOTHING 30 //Minimum movement of X axis before we consider a change
+#define Y_SMOOTHING 30 //Minimum movement of Y axis before we consider a change
 
 class JoystickCtrl {
 private:
