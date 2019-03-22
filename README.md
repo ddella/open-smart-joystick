@@ -1,7 +1,7 @@
 # open-smart-joystick
 
 Firmware for OPEN-SMART wireless joystick remote. This is a modified firmware for the
-OPEN-SMART wireless joystick. See the picture of the remote[open-smart.png](open-smart.png).
+OPEN-SMART wireless joystick. See the picture of the remote [open-smart.png](open-smart.png).
 
 Following is what I added from the original version by OPEN-SMART.
 
@@ -17,7 +17,7 @@ To install the optiLoader follow the instruction [here](https://www.electronoobs
 
 1. Download the .zip file [here](https://github.com/WestfW/OptiLoader).
 2. Extract the zip file and open the ".ino" file in Arduino IDE.
-3. Make sure you have the connections between your Arduino UNO and the OPEN-SMART remote. See this (file)[bootloader/optiLoader.png].
+3. Make sure you have the connections between your Arduino UNO and the OPEN-SMART remote. See this [file](bootloader/optiLoader.png).
 4. Upload the code to the Arduino UNO, open serial monitor at a baud rate of 19200 and upload.
 
 ## Frame sent from remote, only when there's a change
