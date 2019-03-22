@@ -33,13 +33,13 @@
  * 1. Wireless Joystick status frame. It contains the status of all the buttons,
  *    x-axis and y-axis value.
  *
- * 2. Keepalive frame. Sent to the remote to make sure it stills sees the joystick.
+ * 2. Keepalive frame. Sent to the remote so the receiver can detect when its out of range.
  * 
  * Frame from remote wireless joystick. Frames are only sent when there's a change.
  * +------------+------------+------------+------------+------------+------------+------------+
- * | Preamble   |    Keys    |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
- * +------------+------------+------------+------------+------------+------------+------------+
- *     byte 0       byte 1       byte 2       byte 3       byte 4       byte 5       byte 6
+ * | Preamble   |   Button   | MSB x-axis | LSB x-axis | MSB y-axis | LSB y-axis |    FCS     |
+ * +------------+------------+------------+------------+------------+------------+------------+ 
+ *    byte 0       byte 1       byte 2       byte 3       byte 4       byte 5       byte 6
  * 
  *      Preamble = 0xAA
  *      
@@ -68,7 +68,7 @@
  *      FCS = Cheksum off all the bytes, including the preamble byte.
  * 
  * 
- * Keepalive sent every 3 seconds, by default.
+ * Keepalive sent every 2 seconds, by default.
  * 
  * +------------+------------+------------+------------+------------+------------+------------+
  * | Preamble   |    0xAA    |    0x55    |    0xAA    |    0x55    |    0xAA    |    FCS     |
@@ -76,7 +76,7 @@
  *     byte 0       byte 1       byte 2       byte 3       byte 4       byte 5       byte 6
  * 
  * Preamble = 0xE0
- * FCS = 0x07
+ * FCS = 0xB5
  *
 */
 
