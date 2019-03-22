@@ -11,6 +11,10 @@ Following is what I added from the original version by OPEN-SMART.
 
 ## Getting Started
 
+These instructions will get you a copy of the new firmware into the OPEN-SMART remote.
+
+### Prerequisites
+
 To install this firmware into the wireless joystcik remote you need to have a bootloader.
 The remote uses an ATmega8 MCU. The easiest bootloader to install is the [optiLoader](https://github.com/WestfW/OptiLoader)
 To install the optiLoader follow the instruction [here](https://www.electronoobs.com/eng_arduino_OptiLoader.php).
@@ -51,9 +55,10 @@ Programming bootloader: 512 bytes at 0xF00
 Restoring normal fuses
   Lock: 2F ABE000  Low: BF ABA000  High: CC ABA800
 
-Target power OFF!```
+Target power OFF!
 
 Type 'G' or hit RESET for next chip
+```
 
 ## Frame sent from remote, only when there's a change
 
