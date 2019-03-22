@@ -61,11 +61,18 @@ Type 'G' or hit RESET for next chip
 ```
 
 ## Frame sent from remote, only when there's a change
+
+The remote sends only two types of packets.
+1. Packet with preamble of 0xAA are sent only when there's a change on the remote.
+Either a button pressed/released or a movement with the joystick.
+2. Packet with preamble of 0xE0 are Keepalive.
+
 ```
 +------------+------------+------------+------------+------------+------------+------------+
 | Preamble   |    Key     |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
 +------------+------------+------------+------------+------------+------------+------------+
 ```
+
 Preamble = 0xAA
 
 The following byte represents any of the button. Bits [5-7] are always 0.
