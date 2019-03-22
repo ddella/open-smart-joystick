@@ -1,5 +1,5 @@
 /*
- * Program:  WirelessJoystickRemote.ino
+ * Program:  Receiver.ino
  *  
  * Description:  Open-Smart wireless joystick. Frequency of RF receiver is 433MHz.
  *   Simple example of how to use VirtualWire to receive messages from the wireless joystick.
