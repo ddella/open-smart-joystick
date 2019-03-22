@@ -50,3 +50,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+README.md.example
+.DS_Store
+bootloader/optiloader.fzz
