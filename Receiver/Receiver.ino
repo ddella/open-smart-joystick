@@ -172,7 +172,6 @@ void setup() {
   Serial.println(F("by Daniel Della Noce"));
   Serial.print(F("Please connect Rx pin of module on DIO #: ")); Serial.println (RX_DIO_PIN);
   Serial.println();
-  pinMode (13, OUTPUT);
 
   // Initialises the DIO pin used to receive data from the Rx module
   vw_set_rx_pin(RX_DIO_PIN);
@@ -195,7 +194,6 @@ void loop() {
 
     // If a message is received, we store it with the length of the message received
     if (vw_get_message(RxBuffer, &Buffer_Size)) {
-      digitalWrite(13, HIGH); // Turn on the LED connected pin 13
      //Remote sends fixed 7-byte frames for status and keepalive
       if (Buffer_Size == MAX_MESSAGE_LEN) {
         FCS = Checksum (RxBuffer, MAX_MESSAGE_LEN - 1);//Caculate checksum from the buffer received
@@ -232,7 +230,7 @@ void loop() {
                  case JOYSTICK_BUTTON_K4_PRESSED:
                    Serial.print (F("Button K4 pressed: "));
                     LastButtonPressed = JOYSTICK_BUTTON_K4_PRESSED;
-                break;
+                 break;
                  case JOYSTICK_BUTTON_KZ_PRESSED:
                    Serial.print (F("Button KZ pressed: "));
                    LastButtonPressed = JOYSTICK_BUTTON_KZ_PRESSED;
@@ -260,7 +258,6 @@ void loop() {
 #endif
           }//switch (RxBuffer [0])
           PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
-          digitalWrite(13, LOW);          
         }//if FCS
       }//if length
     }//ifvw_get_message
