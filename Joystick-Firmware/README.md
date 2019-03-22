@@ -10,17 +10,17 @@ Files to be uploaded the the OPEN-SMART Wireless Remote Control.
 ### Prerequisites
 
 To upload the code, you'll need a USB-to-serial. I used a Sparkfun FTDI basic with the
-following connection.
+following connections.
 
 ```
-----------------------
-Sparkfun | OPEN-SMART
-----------------------
-GND      |   GND     |
-5V       |   VIN     |
-TXD      |   RX      |
-RXI      |   TX      |
-DTR      |   DTR     |
-----------------------
+-------------------------
+| Sparkfun | OPEN-SMART |
+-------------------------
+|   GND    |    GND     |
+|   5V     |    VIN     |
+|   TXD    |    RX      |
+|   RXI    |    TX      |
+|   DTR    |    DTR     |
+-------------------------
 ```
 
