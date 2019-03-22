@@ -14,7 +14,7 @@
 #define MAX_TX_BUFFER 7 //Remote is sending a fix amount of bytes
 #define TX_SPEED 2000 //Transmission speed in bits/sec
 
-// TX buffer of data transmitted to the receiver
+// TX buffer transmitted to the receiver
 uint8_t TXBuffer[MAX_TX_BUFFER]= {0xAA, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}; 
 
 //Wireless RF 433 Mhz module on the remote
@@ -44,10 +44,10 @@ void setup() {
   Serial.println(F("OPEN-SMART Wireless Joystick Remote"));
 #endif
 
-#ifdef KEEPALIVE
 /*
  * Initialize timer #2 to send keepalive
  */
+#ifdef KEEPALIVE
   Timer2_Init();
 #endif
 
@@ -101,7 +101,7 @@ void loop() {
  * 
  * If we use the highest pre-scalar of 1024, calculation shows that ISR will be called every 16ms.
  * 
- * OverFlowCount = 1000ms / 16ms = 62,5 ≈ 63 times for every second
+ * OverFlowCount = 1000ms / 16ms = 62,5 ≈ 63 overflows per second
  * 
  */
 #ifdef KEEPALIVE
