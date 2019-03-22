@@ -18,7 +18,42 @@ To install the optiLoader follow the instruction [here](https://www.electronoobs
 1. Download the .zip file [here](https://github.com/WestfW/OptiLoader).
 2. Extract the zip file and open the ".ino" file in Arduino IDE.
 3. Make sure you have the connections between your Arduino UNO and the OPEN-SMART remote. See this [file](bootloader/optiLoader.png).
-4. Upload the code to the Arduino UNO, open serial monitor at a baud rate of 19200 and upload.
+4. Upload the code to the Arduino UNO, open serial monitor and set the baud rate at 19200
+5. Upload the code.
+
+You should receive the following message if the bootloader has been successfully burned.
+
+```OptiLoader Bootstrap programmer.
+2011 by Bill Westfield (WestfW)
+
+Target power on! ...
+Starting Program Mode [OK]
+
+Reading signature:9307
+Searching for image...
+  Found "optiboot_atmega8.hex" for atmega8
+  Start address at 1E00
+  Total bytes read: 482
+
+Setting fuses for programming
+  Lock: 3F ABE000  Low: BF ABA000  High: CC ABA800
+
+Programming bootloader: 512 bytes at 0xF00
+  Commit Page: F00:4C0F00
+  Commit Page: F20:4C0F20
+  Commit Page: F40:4C0F40
+  Commit Page: F60:4C0F60
+  Commit Page: F80:4C0F80
+  Commit Page: FA0:4C0FA0
+  Commit Page: FC0:4C0FC0
+  Commit Page: FE0:4C0FE0
+
+Restoring normal fuses
+  Lock: 2F ABE000  Low: BF ABA000  High: CC ABA800
+
+Target power OFF!```
+
+Type 'G' or hit RESET for next chip
 
 ## Frame sent from remote, only when there's a change
 
