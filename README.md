@@ -21,8 +21,9 @@ To install the optiLoader follow the instruction [here](https://www.electronoobs
 
 1. Download the .zip file [here](https://github.com/WestfW/OptiLoader).
 2. Extract the zip file and open the ".ino" file in Arduino IDE.
-3. Make sure you have the connections between your Arduino UNO and the OPEN-SMART remote. See this [file](bootloader/optiLoader.png).
-4. Upload the code to the Arduino UNO, open serial monitor and set the baud rate at 19200
+3. Make sure you have the connections between a workink Arduino (UNO, nano) and the OPEN-SMART remote.
+See this [file](bootloader/optiLoader.png) for the connections.
+4. Upload the code to the working Arduino, open serial monitor and set the baud rate at 19200.
 5. Upload the code.
 
 You should receive the following message if the bootloader has been successfully burned.
