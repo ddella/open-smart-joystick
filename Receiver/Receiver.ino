@@ -47,7 +47,7 @@
  *      FCS = Cheksum off all the bytes, including the preamble byte.
  * 
  * 
- * Keepalive sent every 3 seconds, by default.
+ * Keepalive sent every 2 seconds, by default.
  * 
  * +------------+------------+------------+------------+------------+------------+------------+
  * | Preamble   |    0xAA    |    0x55    |    0xAA    |    0x55    |    0xAA    |    FCS     |
