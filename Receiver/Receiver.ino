@@ -16,13 +16,13 @@
  * 
  * Frame from remote wireless joystick. Frames are only sent when there's a change.
  * +------------+------------+------------+------------+------------+------------+------------+
- * | Preamble   |    Keys    |   X-Axis H |   X-Axis L |   Y-Axis H |   Y-Axis L |    FCS     |
- * +------------+------------+------------+------------+------------+------------+------------+
- *     byte 0       byte 1       byte 2       byte 3       byte 4       byte 5       byte 6
+ * | Preamble   |   Button   | MSB x-axis | LSB x-axis | MSB y-axis | LSB y-axis |    FCS     |
+ * +------------+------------+------------+------------+------------+------------+------------+ 
+ *    byte 0       byte 1       byte 2       byte 3       byte 4       byte 5       byte 6
  *
  *      Preamble = 0xAA
  *      
- *      Keys = (see below)
+ *      Button = (see below)
  *           K1 pressed = 0b00000001 (0x01)
  *           K2 pressed = 0b00000010 (0x02)
  *           K3 pressed = 0b00000100 (0x04)
