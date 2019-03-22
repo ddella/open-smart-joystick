@@ -139,7 +139,14 @@ uint8_t JoystickCtrl::readKeys() {
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
     if(!digitalRead(_Key_Pin[keys_idx])){
       delay(DEBOUNCE_DELAY_KEYS); //debounce
-      Pin_Value = !digitalRead(_Key_Pin[keys_idx]);//0=Not pressed, 1=Pressed
+
+/*
+ * Since we're using a pull-up for the buttons, we need to negate
+ * the digital read to have the following values.
+ *    0 = Not pressed
+ *    1 = Pressed
+ */
+      Pin_Value = !digitalRead(_Key_Pin[keys_idx]);
       //Sets/Clear a specific bit in a byte
       keys ^= _CHANGE_BIT(keys, Pin_Value, keys_idx);
     }
@@ -149,20 +156,20 @@ uint8_t JoystickCtrl::readKeys() {
 
 /*
  * Return the value a the x-axis as a number between 0-1023
- * This is the 3rd&4th byte sent when there's a change in the status of the remote.
+ * This is the 3rd & 4th bytes sent when there's a change in x axis.
  */
 uint16_t JoystickCtrl::readX_Axis() {
   return analogRead (AIO_XAXIS);
 }//ReadX_Axis
 
-/*
- * Return the value a the y-axis as a number between 0-1023
- * This is the 5th&6th byte sent when there's a change in the status of the remote.
- */
 uint16_t JoystickCtrl::getX_Axis() {
   return _X_Axis;
 }//getX_Axis
 
+/*
+ * Return the value a the y-axis as a number between 0-1023
+ * This is the 5th & 6th bytes sent when there's a change in the y axis.
+ */
 uint16_t JoystickCtrl::readY_Axis() {
   return analogRead (AIO_YAXIS);
 }//ReadY_Axis
@@ -177,7 +184,7 @@ uint8_t JoystickCtrl::getKeys () {
 
 uint8_t JoystickCtrl::asChange() {
   uint8_t  flag_change = 0;
-  int x,y; //Diffrence between new & old hor/ver axis. Needs to be a signed var
+  int x,y; //Diffrence between new & old x or y axis. Needs to be a 16-bit signed variable
 
 /*
  * Check if a button has changed state. Either pressed or released.
@@ -207,6 +214,7 @@ uint8_t JoystickCtrl::asChange() {
 
 /*
  * Simple checksum function. Returns the checksum of an array of bytes.
+ * Checksum is calculated of the whole packet, including the premabule.
  */
 uint8_t JoystickCtrl::Checksum (const uint8_t *data, uint8_t len) {
   uint8_t c = 0;
