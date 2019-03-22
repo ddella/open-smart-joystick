@@ -150,5 +150,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 * Thanks to Bill Westfield for his optiLoader
-* Inspiration from intial code of OPEN-SMART
-
+* Inspiration from intial code of OPEN-SMART. Nice schematic from Jack and Fred Chu.
