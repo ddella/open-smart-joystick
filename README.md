@@ -89,7 +89,8 @@ of each bits.
 
 Preamble of a status packet = 0xAA
 
-The following byte represents any of the button. Bits [5-7] are always 0.
+The following byte represents the "button". Each button on the remote has a bit associated to it.
+Bits [5-7] are always 0.
 
 ```
 +------+------+------+------+------+------+------+------+
@@ -113,7 +114,24 @@ Values for X or Y axis are encoded on 16-Bits to keep the full resolution of the
 
 As an example, if the axis value is 0x03ff, then
 
-MSB of axis byte  = 0xFF
-LSB of axis byte  = 0x03
+* MSB of axis byte  = 0xFF
+* LSB of axis byte  = 0x03
 
 The last byte is an FCS on all the bytes, including preamble.
+
+##### Keepalive packet
+
+The keepalive packets are sent at regular interval so the receiver can detect when its out of range.
+This feature can be disable when compiling the firmware. See the `#define` in the code.
+The structure of the packet is very simple. It's a fixed packet with fixed value.
+
+Keepalive sent every 3 seconds
+```
++------------+------------+------------+------------+------------+------------+------------+
+| Preamble   |    0xAA    |    0x55    |    0xAA    |    0x55    |    0xAA    |    FCS     |
++------------+------------+------------+------------+------------+------------+------------+
+```
+
+Preamble = 0xE0
+The last byte is an FCS on all the bytes, including preamble.
+
