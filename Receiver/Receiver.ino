@@ -130,7 +130,9 @@
  */
 #define KEEPALIVE
 
-// Digital IO pin that will be used for receiving data from the RF receiver
+/*
+ * Digital IO pin from the RF receiver. Can be any digital pin.
+ */
 #define RX_DIO_PIN 4
 #define MAX_MESSAGE_LEN 7 //Joystick sends a max of 7 bytes
 #define TX_SPEED 2000 //Transmission speed in bits/sec
@@ -207,11 +209,11 @@ void setup() {
 void loop() {
   uint8_t Buffer_Size = MAX_MESSAGE_LEN; //Number of bytes received
   uint8_t RxBuffer[MAX_MESSAGE_LEN];     //Buffer that contains the received data
-  uint8_t FCS; //Calculated checksum from the frame received
+  uint8_t FCS; //Calculated checksum from the received packet
 
-    // If a message is received, we store it with the length of the message received
+    // If a packet is received, we store it with it's length
     if (vw_get_message(RxBuffer, &Buffer_Size)) {
-     //Remote sends fixed 7-byte frames for status and keepalive
+     //Remote sends fixed 7-byte packets for either status and keepalive
       if (Buffer_Size == MAX_MESSAGE_LEN) {
         FCS = Checksum (RxBuffer, MAX_MESSAGE_LEN - 1);//Caculate checksum from the buffer received
         if (FCS == RxBuffer [MAX_MESSAGE_LEN - 1]) {
@@ -268,12 +270,12 @@ void loop() {
                  break;
                }//switch (RxBuffer [1])
              break;
-#ifdef KEEPALIVE
+            #ifdef KEEPALIVE
             case KEEPALIVE_PREAMBULE:
               Serial.print ("Keepalive: ");
               LastKeepalive = millis();//Reset keepalive timer
             break;
-#endif
+            #endif
           }//switch (RxBuffer [0])
           PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
         }//if FCS
