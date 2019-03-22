@@ -201,16 +201,17 @@ void loop() {
           //RxBuffer [0] is the preamble. Either status or keepalive
           switch (RxBuffer [0]) { // Check if we received a status or a keepalive
             case STATUS_PREAMBULE:
-
               Current_X_Axis = WORD(RxBuffer [2], RxBuffer [3]);
               Current_Y_Axis = WORD(RxBuffer [4], RxBuffer [5]);
               if (Current_X_Axis != Last_X_Axis) {
-                Serial.print (F("X axis value changed = ")); Serial.println (Current_X_Axis);
+                Serial.print (F("X axis value changed = ")); Serial.print (Current_X_Axis);
+                Serial.print (F(" :"));
                 Last_X_Axis = Current_X_Axis;
               }
               if (Current_Y_Axis != Last_Y_Axis) {
-                Serial.print (F("Y axis value changed = ")); Serial.println (Current_Y_Axis);
+                Serial.print (F("Y axis value changed = ")); Serial.print (Current_Y_Axis);
                 Last_Y_Axis = Current_Y_Axis;
+                Serial.print (F(" :"));
               }
 
                //RxBuffer [1] is the button byte. (which button has been pressed)
@@ -246,8 +247,8 @@ void loop() {
                      Serial.print (F("Button K4 released: "));
                    else if (LastButtonPressed == JOYSTICK_BUTTON_KZ_PRESSED)
                      Serial.print (F("Button KZ released: "));
+                   LastButtonPressed = RxBuffer [1];  
                  break;
-                 LastButtonPressed = RxBuffer [1];
                }//switch (RxBuffer [1])
              break;
 #ifdef KEEPALIVE
