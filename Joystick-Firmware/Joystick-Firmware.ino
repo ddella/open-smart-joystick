@@ -183,9 +183,9 @@ void Timer2_Init() {
 }//Timer2_Init()
 
 /*
- * Sends keepalives to the receiver
+ * Sends keepalive packets to the receiver.
  * 
- * Keepalive frame
+ * Keepalive packets are 7-bytes long with fixed pattern.
  *
  * +------------+------------+------------+------------+------------+------------+------------+
  * | Preamble   |    0x55    |    0xAA    |    0x55    |    0xAA    |    0x55    |    FCS     |
