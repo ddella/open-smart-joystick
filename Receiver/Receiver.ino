@@ -174,7 +174,7 @@ void loop() {
    * to be able to use "continue".
    */
     if (vw_get_message(RxBuffer, &Buffer_Size)) {
-    //if packet is not the correct length, then just skip. Not sent from our remote.
+      //if packet is not the correct length, then just skip. Not sent from our remote.
       if (Buffer_Size != MAX_MESSAGE_LEN)
         continue;
       //Caculate checksum of the received packet.
@@ -184,7 +184,7 @@ void loop() {
         continue;
 
       /*
-       * We received a packet of the correct length and with a valid checksum.
+       * At this point, we received a packet of the correct length and with a valid checksum.
        * We need to verify the type of packet by looking at the preambule byte.
        * RxBuffer [0] is the preamble. It can be either status or keepalive
        */
@@ -201,8 +201,8 @@ void loop() {
     } // if packet received
 
     /* 
-     *  This block is executed every 500 ms to check if keepalive are
-     *  received from remote at the correct interval.
+     *  This block is executed every 500 ms to check if keepalive packets are
+     *  received from remote at the correct interval. This is non-blocking.
      */
     #ifdef KEEPALIVE
     if (millis() - previousMillis_500ms >= INTERVAL_500ms) {
@@ -231,8 +231,8 @@ void loop() {
  * ------------------
  *
  * Treat the reception of a status packet. This type of packet is sent whenever a
- * change is detected on the remote. Either a button pressed/released or joystick
- * movement.
+ * change is detected on the wireless remote. Either a button pressed/released or
+ * a joystick movement.
  * 
  * @param  Array of byte
  * 
@@ -304,9 +304,9 @@ void RXStatus (const uint8_t *RxBuffer) {
  */
 void RXKeealive (const uint8_t *RxBuffer) {
    Serial.print ("Keepalive: ");
-   LastKeepalive = millis();//Reset keepalive timer
+   LastKeepalive = millis(); //Reset keepalive timer
    PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
-} //RXKeealive (const uint8_t *RxBuffer)
+} //RXKeealive (const uint8_t *)
 
 /*
  * Function: Checksum
@@ -326,14 +326,14 @@ uint8_t Checksum (const uint8_t *data, uint8_t len) {
   while (len--)
     c ^= *data++;
   return c;
-}// Checksum()
+}// Checksum (const uint8_t *, uint8_t)
 
 /*
  * Function: PrintBuf
  * ------------------
  *
  * Print hex digit from an array of bytes. HEX numbers are printed in the following
- * format: 0x00, 0x00, 0x00
+ * format: 0x00, 0x00, 0x00, ...
  * 
  * @param  Array of byte
  *         Length of array
@@ -351,4 +351,4 @@ void PrintBuf (const uint8_t *data, uint8_t len) {
       Serial.print(",");
   }//for
   Serial.println ();
-}// PrintBuf()
+}// PrintBuf (const uint8_t *, uint8_t)
