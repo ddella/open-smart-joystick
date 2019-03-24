@@ -64,9 +64,10 @@ Type 'G' or hit RESET for next chip
 ## Files
 
 * The directory [Joystick-Firmware](Joystick-Firmware) contains the firmware that goes into the ATmega8
-on the Wireless Joystick Remote.
-* The directory [Receiver](Receiver) is an example of a receiver. It listens for packets from the remote
+of the Wireless Joystick Remote.
+* The directory [Receiver](Receiver) is an example of the code for a receiver. It listens for packets from the remote
 and act accordingly.
+* The directory [bootloader](bootloader) is an example of the code I used for the bootloader of the ATmega8 on the remote.
 
 ## Frames sent from remote
 
@@ -135,7 +136,7 @@ The keepalive packets are sent at regular interval so the receiver can detect wh
 This feature can be disable when compiling the firmware. See the `#define` in the code.
 The structure of the packet is very simple. It's a fixed packet with fixed value.
 
-Keepalive sent every 3 seconds
+Keepalive sent every 2 seconds
 ```
 +------------+------------+------------+------------+------------+------------+------------+
 | Preamble   |    0xAA    |    0x55    |    0xAA    |    0x55    |    0xAA    |    FCS     |
