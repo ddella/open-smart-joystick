@@ -282,7 +282,16 @@ void Preamble (const uint8_t *RxBuffer) {
 } //Preamble (const uint8_t *RxBuffer)
 
 /*
- * Simple checksum function. Returns the checksum of an array of bytes.
+ * Function: Checksum
+ * ------------------
+ *
+ * Simple checksum function. Returns the checksum of an array of bytes. The checksum is
+ * a single byte.
+ * 
+ * @param  Array of byte
+ *         Length of array
+ * 
+ * @return checksum
  */
 uint8_t Checksum (const uint8_t *data, uint8_t len) {
   uint8_t c = 0;
@@ -293,7 +302,16 @@ uint8_t Checksum (const uint8_t *data, uint8_t len) {
 }// Checksum()
 
 /*
- * Print hex digit from an array of bytes.
+ * Function: PrintBuf
+ * ------------------
+ *
+ * Print hex digit from an array of bytes. HEX numbers are printed in the following
+ * format: 0x00, 0x00, 0x00
+ * 
+ * @param  Array of byte
+ *         Length of array
+ * 
+ * @return Nothing
  */
 void PrintBuf (const uint8_t *data, uint8_t len) {
   while (len--) {
