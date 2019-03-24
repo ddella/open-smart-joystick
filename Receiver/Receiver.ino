@@ -170,7 +170,8 @@ void loop() {
 
   while (1) {
   /*
-   * Check to see if we received a packet
+   * Check to see if we received a packet. I used a while(1) loop inside loop()
+   * to be able to use "continue".
    */
     if (vw_get_message(RxBuffer, &Buffer_Size)) {
     //if packet is not the correct length, then just skip. Not sent from our remote.
@@ -189,14 +190,11 @@ void loop() {
        */
       switch (RxBuffer [0]) {
         case STATUS_PREAMBULE:
-          Preamble (RxBuffer);
-          PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
+          RXStatus (RxBuffer);
         break;
         #ifdef KEEPALIVE
         case KEEPALIVE_PREAMBULE:
-          Serial.print ("Keepalive: ");
-          PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
-          LastKeepalive = millis();//Reset keepalive timer
+          RXKeealive (RxBuffer);
         break;
         #endif
       }//switch (RxBuffer [0])
@@ -228,7 +226,19 @@ void loop() {
 
 }//loop()
 
-void Preamble (const uint8_t *RxBuffer) {
+/*
+ * Function: RXStatus
+ * ------------------
+ *
+ * Treat the reception of a status packet. This type of packet is sent whenever a
+ * change is detected on the remote. Either a button pressed/released or joystick
+ * movement.
+ * 
+ * @param  Array of byte
+ * 
+ * @return Nothing
+ */
+void RXStatus (const uint8_t *RxBuffer) {
 
   Current_X_Axis = WORD(RxBuffer [2], RxBuffer [3]);
   Current_Y_Axis = WORD(RxBuffer [4], RxBuffer [5]);
@@ -279,7 +289,24 @@ void Preamble (const uint8_t *RxBuffer) {
        LastButtonPressed = RxBuffer [1];  
      break;
    }//switch (RxBuffer [1])
-} //Preamble (const uint8_t *RxBuffer)
+   PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
+} //RXStatus (const uint8_t *RxBuffer)
+
+/*
+ * Function: RXKeealive
+ * --------------------
+ *
+ * Treat the reception of a keepalive packet.
+ * 
+ * @param  Array of byte
+ * 
+ * @return Nothing
+ */
+void RXKeealive (const uint8_t *RxBuffer) {
+   Serial.print ("Keepalive: ");
+   LastKeepalive = millis();//Reset keepalive timer
+   PrintBuf (RxBuffer, MAX_MESSAGE_LEN);
+} //RXKeealive (const uint8_t *RxBuffer)
 
 /*
  * Function: Checksum
