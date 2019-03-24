@@ -58,6 +58,7 @@ uint32_t LastKeepalive; //millis() timestamp of the last keepalive received
 
 uint8_t Checksum (const uint8_t *, uint8_t);
 void PrintBuf (const uint8_t *, uint8_t);
-void Preamble (const uint8_t *);
+void RXStatus (const uint8_t *);
+void RXKeealive (const uint8_t *);
 
 #endif /* RECEIVER_H */
