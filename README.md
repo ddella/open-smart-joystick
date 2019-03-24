@@ -26,7 +26,7 @@ See this [file](bootloader/optiLoader.png) for the connections.
 4. Upload the code to the working Arduino, open serial monitor and set the baud rate at 19200.
 5. Upload the code.
 
-You should receive the following message if the bootloader has been successfully burned.
+You should receive the following message if the bootloader has been successfully flashed to the ATmega8 of the remote.
 
 ```
 OptiLoader Bootstrap programmer.
