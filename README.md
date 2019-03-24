@@ -63,9 +63,9 @@ Type 'G' or hit RESET for next chip
 ```
 ## Files
 
-The directory [Joystick-Firmware](Joystick-Firmware) contains the firmware that goes into the ATmega8
+* The directory [Joystick-Firmware](Joystick-Firmware) contains the firmware that goes into the ATmega8
 on the Wireless Joystick Remote.
-The directory [Receiver](Receiver) is an example of a receiver. It listens for packets from the remote
+* The directory [Receiver](Receiver) is an example of a receiver. It listens for packets from the remote
 and act accordingly.
 
 ## Frames sent from remote
