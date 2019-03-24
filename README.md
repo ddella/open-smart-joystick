@@ -152,4 +152,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 * Thanks to Bill Westfield for his optiLoader.
 * Inspiration from OPEN-SMART's intial code. (Jack and Fred Chu ???).
-* Thanks to [electronoobs](https://www.electronoobs.com/eng_arduino_OptiLoader.php) for the instructions for the optiLoader.
+* Thanks to [electronoobs](https://www.electronoobs.com/eng_arduino_OptiLoader.php) for the instructions to load the optiLoader.
