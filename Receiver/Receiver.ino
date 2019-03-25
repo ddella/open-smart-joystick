@@ -95,7 +95,7 @@
  * ----------------------------------------------------
  * GND       |   GND         | GND
  * VCC       |   VCC (5V)    | VCC (5V)
- * SIG       |   RX DATA     | D4 (see RX_DIO_PIN below)
+ * SIG       |   RX DATA     | D4 (see RX_DIO_PIN)
  * -----------------------------------------------------
  * 
  * MIT License
@@ -195,6 +195,7 @@ void loop() {
         #ifdef KEEPALIVE
         case KEEPALIVE_PREAMBULE:
           RXKeealive (RxBuffer);
+          //Serial.println (F("Keepalive received"));
         break;
         #endif
       }//switch (RxBuffer [0])
