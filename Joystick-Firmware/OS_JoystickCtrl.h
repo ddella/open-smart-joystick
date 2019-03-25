@@ -46,18 +46,18 @@ private:
   uint16_t _X_AxisOld, _Y_AxisOld; //Values for joystick pins
   uint8_t _Key_Pin [MAX_KEY]; //Array of I/O pins for all the button
 
-  uint8_t  readKeys();   //Digital read of all the buttons of the remote                     
-  uint16_t read_Axis(uint8_t);  //Analog read of an analog pin as uint16_t: Private
+  uint8_t  readKeys ();   //Digital read of all the buttons of the remote                     
+  uint16_t read_Axis (uint8_t);  //Analog read of a joystick's axis
 
 public:
   JoystickCtrl ();
   void init();
   uint8_t  getKeys ();  //Returns the encoded keys pressed in a single byte.
 
-  uint16_t getX_Axis(); //Returns variable _X_Axis as uint16_t: Public
-  uint16_t getY_Axis(); //Returns variable _Y_Axis as uint16_t: Public
+  uint16_t getX_Axis (); //Returns variable _X_Axis as uint16_t: Public
+  uint16_t getY_Axis (); //Returns variable _Y_Axis as uint16_t: Public
 
-  uint8_t asChange(); //Read all sensors on remote and return true if something chnaged.
+  uint8_t asChange (); //Read all sensors on remote and return true if something chnaged.
   uint8_t Checksum (const uint8_t *data, uint8_t len); //Returns checksum of an array of bytes.
 };
 
