@@ -202,5 +202,6 @@ void Send_KeepAlive () {
    */
   //TXBuffer[MAX_TX_BUFFER-1] = remote.Checksum (TXBuffer, MAX_TX_BUFFER-1);
   vw_send (KeepAlive, MAX_TX_BUFFER);
+  Serial.println (F("Keepalive sent"));
 }
 #endif
