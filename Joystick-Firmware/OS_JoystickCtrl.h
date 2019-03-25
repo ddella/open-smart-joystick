@@ -23,8 +23,11 @@ enum keys_idx {k1, k2, k3, k4, kz};
 #define MSB(b) (b >> 8)   //Returns the MSB of an uint16_t
 #define LSB(b) (b & 0xff) //Returns the LSB of an uint16_t
 
-#define X_SMOOTHING 30 //Minimum movement of X axis before we consider a change
-#define Y_SMOOTHING 30 //Minimum movement of Y axis before we consider a change
+#define X_SMOOTHING 7 //Minimum movement of X axis before we consider a change
+#define Y_SMOOTHING 7 //Minimum movement of Y axis before we consider a change
+
+#define ANALOG_READING 2       // Number of analogRead (samples) for the joystick axis
+#define DELAY_ANALOG_READING 50 // Delay between each analogRead, in microsec
 
 class JoystickCtrl {
 private:
@@ -44,8 +47,7 @@ private:
   uint8_t _Key_Pin [MAX_KEY]; //Array of I/O pins for all the button
 
   uint8_t  readKeys();   //Digital read of all the buttons of the remote                     
-  uint16_t readX_Axis(); //Analog read of pin as uint16_t: Private
-  uint16_t readY_Axis(); //Analog read of pin as uint16_t: Private
+  uint16_t read_Axis(uint8_t);  //Analog read of an analog pin as uint16_t: Private
 
 public:
   JoystickCtrl ();
