@@ -95,11 +95,15 @@ JoystickCtrl::JoystickCtrl() {
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
     pinMode(_Key_Pin[keys_idx], INPUT_PULLUP);
   }
+
+  /* Initialise analog I/O for the joystick */
+  pinMode(AIO_XAXIS, INPUT); // analog
+  pinMode(AIO_YAXIS, INPUT); // analog
 /*
  * Get the initial values of all the sensors.
  * Joystick MUST be in neutral position when reading.
  */
-  init ();
+  //init ();
 
 }//JoystickCtrl
 
@@ -110,8 +114,8 @@ void JoystickCtrl::init() {
   _Keys     = 0x00;
   _Old_Keys = 0x00;
 
-  _X_Axis = readX_Axis();
-  _Y_Axis = readY_Axis();
+  _X_Axis = read_Axis(AIO_XAXIS); //readX_Axis(); //read_Axis(AIO_XAXIS);
+  _Y_Axis = read_Axis(AIO_YAXIS); //readY_Axis(); //read_Axis(AIO_YAXIS);
   _X_AxisOld = _X_Axis; 
   _Y_AxisOld = _Y_Axis;
 }//init
@@ -155,24 +159,32 @@ uint8_t JoystickCtrl::readKeys() {
 }//readKeys()
 
 /*
- * Return the value a the x-axis as a number between 0-1023
- * This is the 3rd & 4th bytes sent when there's a change in x axis.
+ * Return the value of either the x or y axis as a number between 0-1023.
+ * The function takes "ANALOG_READING" readings and average them together
+ * to produce a result.
  */
-uint16_t JoystickCtrl::readX_Axis() {
-  return analogRead (AIO_XAXIS);
-}//ReadX_Axis
+uint16_t JoystickCtrl::read_Axis(uint8_t analogPin) {
+  uint16_t AVRG = 0;
+  uint8_t i;
+  /*
+  * Read the joystick's axis "ANALOG_READING" times and average them.
+  * This should be enough to remove the noise on the reading.
+  */
+  /*
+  for (i = 0; i < ANALOG_READING; i++) {
+    AVRG += analogRead (analogPin);
+    //delay(DELAY_ANALOG_READING);
+    delayMicroseconds(DELAY_ANALOG_READING);
+  }
+  AVRG /= ANALOG_READING;
+  return AVRG;
+  */
+  return (analogRead (analogPin));
+}//Read_Axis
 
 uint16_t JoystickCtrl::getX_Axis() {
   return _X_Axis;
 }//getX_Axis
-
-/*
- * Return the value a the y-axis as a number between 0-1023
- * This is the 5th & 6th bytes sent when there's a change in the y axis.
- */
-uint16_t JoystickCtrl::readY_Axis() {
-  return analogRead (AIO_YAXIS);
-}//ReadY_Axis
 
 uint16_t JoystickCtrl::getY_Axis() {
   return _Y_Axis;
@@ -195,14 +207,14 @@ uint8_t JoystickCtrl::asChange() {
     flag_change = 1;
   }
 
-  _X_Axis = readX_Axis();
+  _X_Axis = read_Axis (AIO_XAXIS); //readX_Axis(); //read_Axis(AIO_XAXIS);
   x = _X_Axis - _X_AxisOld;
   if (abs (x) > X_SMOOTHING) {
     _X_AxisOld = _X_Axis;
     flag_change = 1;
   }
 
-  _Y_Axis = readY_Axis();
+  _Y_Axis = read_Axis (AIO_YAXIS); //readY_Axis(); //read_Axis(AIO_YAXIS);
   y = _Y_Axis - _Y_AxisOld;
   if (abs (y) > Y_SMOOTHING) {
     _Y_AxisOld = _Y_Axis;
