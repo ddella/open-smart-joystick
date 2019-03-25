@@ -94,6 +94,10 @@ void loop() {
  * If the status of the remote as changed, send the status of all button/axis
  */
   if (remote.asChange()) {
+    /*
+     * If the status of the remote as changed, send a status packet with
+     * the value of all sensors (button and joystick).
+     */
     //TXBuffer[0] = 0xAA;//Already filled
     TXBuffer[1] = remote.getKeys ();
     TXBuffer[2] = MSB(remote.getX_Axis());
@@ -105,19 +109,17 @@ void loop() {
     vw_send (TXBuffer, MAX_TX_BUFFER);
     }//if remote.asChange()
   
-#ifdef KEEPALIVE
-/*
- * Since we're using timer #2 and the counter is 8-bit, we have to overflow
- * the counter so many times before sending a keepalive.
- */
-
+    #ifdef KEEPALIVE
+    /*
+     * Since we're using timer #2 and the counter is 8-bit, we have to overflow
+     * the counter so many times before sending a keepalive.
+     */
     if (Timer2_Overflow_Cnt >= TIMER2_OVERFLOW_CNT_VALUE) {
       //send keepalive packet
-      //Serial.print (F("Timer2_Overflow_Cnt = ")); Serial.println (Timer2_Overflow_Cnt);
       Send_KeepAlive ();
       Timer2_Overflow_Cnt = 0; //Re initialize the overflow counter
     }
-#endif 
+    #endif
 }//loop
 
 /*
@@ -198,7 +200,8 @@ void Timer2_Init() {
 void Send_KeepAlive () {
   uint8_t KeepAlive [MAX_TX_BUFFER] = {0xE0, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xB5};
   /*
-   * Don't need to calculate the checksum each time we send a keepalive
+   * Don't need to calculate the checksum each time we send a keepalive.
+   * It's a fixed packet :-)
    */
   //TXBuffer[MAX_TX_BUFFER-1] = remote.Checksum (TXBuffer, MAX_TX_BUFFER-1);
   vw_send (KeepAlive, MAX_TX_BUFFER);
