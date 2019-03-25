@@ -159,9 +159,8 @@ uint8_t JoystickCtrl::readKeys() {
 }//readKeys()
 
 /*
- * Return the value of either the x or y axis as a number between 0-1023.
- * The function takes "ANALOG_READING" readings and average them together
- * to produce a result.
+ * Return the value of either the x or y axis of the joystick. The returned number
+ * is between 0-1023.
  */
 uint16_t JoystickCtrl::read_Axis(uint8_t analogPin) {
   uint16_t AVRG = 0;
