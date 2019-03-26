@@ -99,7 +99,7 @@ void loop() {
      * the value of all sensors (button and joystick).
      */
     //TXBuffer[0] = 0xAA;//Already filled
-    TXBuffer[1] = remote.getKeys ();
+    TXBuffer[1] = remote.getButtons ();
     TXBuffer[2] = MSB(remote.getX_Axis());
     TXBuffer[3] = LSB(remote.getX_Axis());;
     TXBuffer[4] = MSB(remote.getY_Axis());
@@ -198,7 +198,7 @@ void Timer2_Init() {
  * 
  */
 void Send_KeepAlive () {
-  uint8_t KeepAlive [MAX_TX_BUFFER] = {0xE0, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xB5};
+  static uint8_t KeepAlive [MAX_TX_BUFFER] = {0xE0, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xB5};
   /*
    * Don't need to calculate the checksum each time we send a keepalive.
    * It's a fixed packet :-)
