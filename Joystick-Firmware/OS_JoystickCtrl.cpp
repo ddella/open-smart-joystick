@@ -108,8 +108,8 @@ void JoystickCtrl::init() {
   _Buttons     = 0x00;
   _Old_Buttons = 0x00;
 
-  _X_Axis = _read_Axis(AIO_XAXIS); //readX_Axis(); //_read_Axis(AIO_XAXIS);
-  _Y_Axis = _read_Axis(AIO_YAXIS); //readY_Axis(); //_read_Axis(AIO_YAXIS);
+  _X_Axis = _read_Axis(AIO_XAXIS);
+  _Y_Axis = _read_Axis(AIO_YAXIS);
   _X_AxisOld = _X_Axis; 
   _Y_AxisOld = _Y_Axis;
 }//init
@@ -136,7 +136,6 @@ uint8_t JoystickCtrl::_readButtons() {
 
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
     if(!digitalRead(_Key_Pin[keys_idx])){
-      //delay(DEBOUNCE_DELAY_KEYS); //debounce
       delayMicroseconds (DEBOUNCE_DELAY_BUTTON); //Debounce delay in microsec
      /*
       * Since we're using a pull-up for the buttons, we need to negate
