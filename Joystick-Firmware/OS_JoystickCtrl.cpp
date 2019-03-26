@@ -99,23 +99,17 @@ JoystickCtrl::JoystickCtrl() {
   /* Initialise analog I/O for the joystick */
   pinMode(AIO_XAXIS, INPUT); // analog
   pinMode(AIO_YAXIS, INPUT); // analog
-/*
- * Get the initial values of all the sensors.
- * Joystick MUST be in neutral position when reading.
- */
-  //init ();
-
 }//JoystickCtrl
 
 /*
  * Initialize main variables
  */
 void JoystickCtrl::init() {
-  _Keys     = 0x00;
-  _Old_Keys = 0x00;
+  _Buttons     = 0x00;
+  _Old_Buttons = 0x00;
 
-  _X_Axis = read_Axis(AIO_XAXIS); //readX_Axis(); //read_Axis(AIO_XAXIS);
-  _Y_Axis = read_Axis(AIO_YAXIS); //readY_Axis(); //read_Axis(AIO_YAXIS);
+  _X_Axis = _read_Axis(AIO_XAXIS); //readX_Axis(); //_read_Axis(AIO_XAXIS);
+  _Y_Axis = _read_Axis(AIO_YAXIS); //readY_Axis(); //_read_Axis(AIO_YAXIS);
   _X_AxisOld = _X_Axis; 
   _Y_AxisOld = _Y_Axis;
 }//init
@@ -135,51 +129,36 @@ void JoystickCtrl::init() {
  * 
  * This is the second byte sent when there's a change in the status of the remote.
  */
-uint8_t JoystickCtrl::readKeys() {
+uint8_t JoystickCtrl::_readButtons() {
   uint8_t keys_idx;
   uint8_t keys = 0x00;
   uint8_t Pin_Value; //Value of a pin read by digitalRead
 
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
     if(!digitalRead(_Key_Pin[keys_idx])){
-      delay(DEBOUNCE_DELAY_KEYS); //debounce
-
-/*
- * Since we're using a pull-up for the buttons, we need to negate
- * the digital read to have the following values.
- *    0 = Not pressed
- *    1 = Pressed
- */
+      //delay(DEBOUNCE_DELAY_KEYS); //debounce
+      delayMicroseconds (DEBOUNCE_DELAY_BUTTON); //Debounce delay in microsec
+     /*
+      * Since we're using a pull-up for the buttons, we need to negate
+      * the digital read to have the following values.
+      *    0 = Not pressed
+      *    1 = Pressed
+      */
       Pin_Value = !digitalRead(_Key_Pin[keys_idx]);
-      //Sets/Clear a specific bit in a byte
+      //Write a specific bit in a byte at a specific position
       keys ^= _CHANGE_BIT(keys, Pin_Value, keys_idx);
     }
   }
   return keys;
-}//readKeys()
+}//_readButtons()
 
 /*
  * Return the value of either the x or y axis of the joystick. The returned number
  * is between 0-1023.
  */
-uint16_t JoystickCtrl::read_Axis(uint8_t analogPin) {
-  uint16_t AVRG = 0;
-  uint8_t i;
-  /*
-  * Read the joystick's axis "ANALOG_READING" times and average them.
-  * This should be enough to remove the noise on the reading.
-  */
-  /*
-  for (i = 0; i < ANALOG_READING; i++) {
-    AVRG += analogRead (analogPin);
-    //delay(DELAY_ANALOG_READING);
-    delayMicroseconds(DELAY_ANALOG_READING);
-  }
-  AVRG /= ANALOG_READING;
-  return AVRG;
-  */
+uint16_t JoystickCtrl::_read_Axis(uint8_t analogPin) {
   return (analogRead (analogPin));
-}//Read_Axis
+}//_read_Axis
 
 uint16_t JoystickCtrl::getX_Axis() {
   return _X_Axis;
@@ -189,35 +168,41 @@ uint16_t JoystickCtrl::getY_Axis() {
   return _Y_Axis;
 }//getY_Axis
 
-uint8_t JoystickCtrl::getKeys () {
-  return _Keys;
-}//getKeys
+uint8_t JoystickCtrl::getButtons () {
+  return _Buttons;
+}//getButtons
 
-uint8_t JoystickCtrl::asChange() {
-  uint8_t  flag_change = 0;
+bool JoystickCtrl::asChange() {
+  uint8_t  flag_change = false;
   int x,y; //Diffrence between new & old x or y axis. Needs to be a 16-bit signed variable
 
 /*
  * Check if a button has changed state. Either pressed or released.
  */
-  _Keys = readKeys();
-  if(_Keys != _Old_Keys) {
-    _Old_Keys = _Keys;
-    flag_change = 1;
+  _Buttons = _readButtons();
+  if(_Buttons != _Old_Buttons) {
+    _Old_Buttons = _Buttons;
+    flag_change = true;
   }
 
-  _X_Axis = read_Axis (AIO_XAXIS); //readX_Axis(); //read_Axis(AIO_XAXIS);
+/*
+ * Check if the x axis has changed more than X_SMOOTHING.
+ */
+  _X_Axis = _read_Axis (AIO_XAXIS);
   x = _X_Axis - _X_AxisOld;
   if (abs (x) > X_SMOOTHING) {
     _X_AxisOld = _X_Axis;
-    flag_change = 1;
+    flag_change = true;
   }
 
-  _Y_Axis = read_Axis (AIO_YAXIS); //readY_Axis(); //read_Axis(AIO_YAXIS);
+/*
+ * Check if the y axis has changed more than X_SMOOTHING.
+ */
+  _Y_Axis = _read_Axis (AIO_YAXIS);
   y = _Y_Axis - _Y_AxisOld;
   if (abs (y) > Y_SMOOTHING) {
     _Y_AxisOld = _Y_Axis;
-    flag_change = 1;
+    flag_change = true;
   }
   
   return flag_change;
