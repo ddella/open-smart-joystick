@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define DEBOUNCE_DELAY_BUTTON   4000 // in microsec
+#define DEBOUNCE_DELAY_BUTTON 4000 // in microsec
 
 #define DIO_KEY1 5 //Button K1
 #define DIO_KEY2 4 //Button K2
@@ -54,10 +54,10 @@ private:
 public:
   JoystickCtrl ();
   void init();
-  uint8_t  getButtons (); //Returns the encoded button, pressed/released, in a single byte.
+  uint8_t  getButtons (); //Returns the encoded buttons, pressed/released, in a single byte.
 
-  uint16_t getX_Axis (); //Returns variable _X_Axis as uint16_t: Public
-  uint16_t getY_Axis (); //Returns variable _Y_Axis as uint16_t: Public
+  uint16_t getX_Axis (); //Returns variable _X_Axis
+  uint16_t getY_Axis (); //Returns variable _Y_Axis
 
   bool     asChange (); //Read all sensors on remote and return true if something changed.
   uint8_t  Checksum (const uint8_t *data, uint8_t len); //Returns checksum of an array of bytes.
