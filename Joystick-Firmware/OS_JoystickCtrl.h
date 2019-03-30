@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define DEBOUNCE_DELAY_BUTTON 4000 // in microsec
+#define DEBOUNCE_DELAY_BUTTON 1000 // in microsec
 
 #define DIO_KEY1 5 //Button K1
 #define DIO_KEY2 4 //Button K2
@@ -46,10 +46,10 @@ private:
   uint8_t  _Old_Buttons;
   uint16_t _X_Axis, _Y_Axis; //Analog value for joystick pins
   uint16_t _X_AxisOld, _Y_AxisOld; //Last values for joystick pins
-  uint8_t  _Key_Pin [MAX_KEY]; //Array of I/O pins for all the buttons
+  uint8_t  _Button_Pin [MAX_KEY]; //Array of I/O pins for all the buttons
 
-  uint8_t  _readButtons ();   //Digital read of all the buttons of the remote                     
-  uint16_t _read_Axis (uint8_t);  //Analog read of a joystick's x or y axis
+  uint8_t  _readButtons (); //Digital read of all the buttons of the remote                     
+  uint16_t _read_Axis (uint8_t); //Analog read of a joystick's x or y axis
 
 public:
   JoystickCtrl ();
