@@ -87,13 +87,13 @@ JoystickCtrl::JoystickCtrl() {
   uint8_t keys_idx;
 
   /* Initialise digital I/O for all the buttons */
-  _Key_Pin[k1] = DIO_KEY1;
-  _Key_Pin[k2] = DIO_KEY2;
-  _Key_Pin[k3] = DIO_KEY3;
-  _Key_Pin[k4] = DIO_KEY4;
-  _Key_Pin[kz] = DIO_KEYZ;
+  _Button_Pin[k1] = DIO_KEY1;
+  _Button_Pin[k2] = DIO_KEY2;
+  _Button_Pin[k3] = DIO_KEY3;
+  _Button_Pin[k4] = DIO_KEY4;
+  _Button_Pin[kz] = DIO_KEYZ;
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
-    pinMode(_Key_Pin[keys_idx], INPUT_PULLUP);
+    pinMode(_Button_Pin[keys_idx], INPUT_PULLUP);
   }
 
   /* Initialise analog I/O for the joystick */
@@ -135,7 +135,7 @@ uint8_t JoystickCtrl::_readButtons() {
   uint8_t Pin_Value; //Value of a pin read by digitalRead
 
   for (keys_idx = k1; keys_idx <= kz; keys_idx++) {
-    if(!digitalRead(_Key_Pin[keys_idx])){
+    if(!digitalRead(_Button_Pin[keys_idx])){
       delayMicroseconds (DEBOUNCE_DELAY_BUTTON); //Debounce delay in microsec
      /*
       * Since we're using a pull-up for the buttons, we need to negate
@@ -143,7 +143,7 @@ uint8_t JoystickCtrl::_readButtons() {
       *    0 = Not pressed
       *    1 = Pressed
       */
-      Pin_Value = !digitalRead(_Key_Pin[keys_idx]);
+      Pin_Value = !digitalRead(_Button_Pin[keys_idx]);
       //Write a specific bit in a byte at a specific position
       keys ^= _CHANGE_BIT(keys, Pin_Value, keys_idx);
     }
