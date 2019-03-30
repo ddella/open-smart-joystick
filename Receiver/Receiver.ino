@@ -175,13 +175,20 @@ void loop() {
    */
     if (vw_get_message(RxBuffer, &Buffer_Size)) {
       //if packet is not the correct length, then just skip. Not sent from our remote.
-      if (Buffer_Size != MAX_MESSAGE_LEN)
+      if (Buffer_Size != MAX_MESSAGE_LEN) {
+        Serial.print (F("Error: Received message of length "));
+        Serial.print (Buffer_Size);
+        Serial.print (F(" was expecting length of "));
+        Serial.println (MAX_MESSAGE_LEN);
         continue;
+      }
       //Caculate checksum of the received packet.
       FCS = Checksum (RxBuffer, MAX_MESSAGE_LEN - 1);
       //if checksum is wrong, then just skip. Not sent from our remote or bad packet.
-      if (FCS != RxBuffer [MAX_MESSAGE_LEN - 1])
+      if (FCS != RxBuffer [MAX_MESSAGE_LEN - 1]) {
+        Serial.println (F("Error: Received message with bad checksum: "));
         continue;
+      }
 
       /*
        * At this point, we received a packet of the correct length and with a valid checksum.
